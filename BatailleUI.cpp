@@ -10,16 +10,23 @@ BatailleUI::BatailleUI(std::shared_ptr<Partie> partie, QWidget *parent) : QMainW
     qDebug() << bataille;
     QWidget *centralWidget = new QWidget(this);
 
+    joueurLabel = new QLabel(this);
+    appLabel = new QLabel(this);
+
     carteJoueurLabel = new QLabel(this);
     carteAppLabel = new QLabel(this);
     resultatLabel = new QLabel(this);
     jouerTourButton = new QPushButton("Jouer un tour", this);
 
     QHBoxLayout *carteLayout = new QHBoxLayout;
+    QHBoxLayout *labelsLayout = new QHBoxLayout;
+    labelsLayout->addWidget(joueurLabel);
+    labelsLayout->addWidget(appLabel);
     carteLayout->addWidget(carteJoueurLabel);
     carteLayout->addWidget(carteAppLabel);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addLayout(labelsLayout);
     mainLayout->addLayout(carteLayout);
     mainLayout->addWidget(resultatLabel);
     mainLayout->addWidget(jouerTourButton);
@@ -55,6 +62,9 @@ void BatailleUI::updateUI() {
 
     carteImageJoueur = carteImageJoueur.scaled(labelSize, Qt::KeepAspectRatio);
     carteImageApp = carteImageApp.scaled(labelSize, Qt::KeepAspectRatio);
+
+    joueurLabel->setText("Joueur");
+    appLabel->setText("App");
 
     carteJoueurLabel->setPixmap(carteImageJoueur);
     carteAppLabel->setPixmap(carteImageApp);

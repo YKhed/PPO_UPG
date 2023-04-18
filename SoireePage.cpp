@@ -48,7 +48,6 @@ void SoireePage::onCreatePartieClicked() {
         } catch (const FormException &e) {
             QMessageBox::warning(this, "Erreur", e.what());
         }
-
     }
 }
 

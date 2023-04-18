@@ -26,6 +26,8 @@ private:
     QLabel *resultatLabel;
     QPushButton *jouerTourButton;
     Bataille* bataille;
+    QLabel *joueurLabel;
+    QLabel *appLabel;
 
     void updateUI();
 };
