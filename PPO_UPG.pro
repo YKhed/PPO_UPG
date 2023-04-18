@@ -9,20 +9,45 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    AccueilPage.cpp \
     Bataille.cpp \
+    BatailleUI.cpp \
     Carte.cpp \
+    CreatePartieDialog.cpp \
+    CreateSoireeDialog.cpp \
     Deck.cpp \
+    GestionPage.cpp \
     Jeu.cpp \
     Joueur.cpp \
+    MelangeAleatoire.cpp \
+    Partie.cpp \
+    PartiePage.cpp \
+    Soiree.cpp \
+    SoireePage.cpp \
     main.cpp \
     widget.cpp
 
 HEADERS += \
+    AccueilPage.h \
     Bataille.h \
+    BatailleUI.h \
     Carte.h \
+    CreatePartieDialog.h \
+    CreateSoireeDialog.h \
     Deck.h \
+    FormException.h \
+    GestionPage.h \
     Jeu.h \
+    JeuExterne.h \
+    JeuExterneAdaptateur.h \
+    JeuFactory.h \
     Joueur.h \
+    MelangeAleatoire.h \
+    MelangeStrategie.h \
+    Partie.h \
+    PartiePage.h \
+    Soiree.h \
+    SoireePage.h \
     widget.h
 
 FORMS += \

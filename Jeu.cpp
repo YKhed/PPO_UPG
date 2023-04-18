@@ -1,4 +1,5 @@
 #include "Jeu.h"
+#include <algorithm>
 
 Jeu::Jeu(const std::string& nomJeu, const std::string& description, const std::string& reglesJeu, int nbJoueursMin, int nbJoueursMax)
     : nomJeu(nomJeu), description(description), reglesJeu(reglesJeu), nbJoueursMin(nbJoueursMin), nbJoueursMax(nbJoueursMax) {
@@ -23,3 +24,5 @@ int Jeu::getNbJoueursMin() const {
 int Jeu::getNbJoueursMax() const {
     return nbJoueursMax;
 }
+
+

@@ -1,6 +1,4 @@
 #include "Carte.h"
-
-#include "Carte.h"
 #include <iostream>
 #include <sstream>
 

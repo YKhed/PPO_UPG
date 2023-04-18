@@ -2,6 +2,8 @@
 #ifndef JEU_H
 #define JEU_H
 #include <string>
+#include <vector>
+
 
 class Jeu {
 public:
@@ -15,6 +17,8 @@ public:
     std::string getReglesJeu() const;
     int getNbJoueursMin() const;
     int getNbJoueursMax() const;
+
+
 
 private:
     std::string nomJeu;

@@ -1,43 +1,48 @@
 #include "Bataille.h"
+#include "MelangeAleatoire.h"
 #include <iostream>
 #include <algorithm>
 #include <random>
 
-Bataille::Bataille() : Jeu("Bataille", "Un jeu de cartes classique", "Les joueurs tirent une carte chacun et le joueur avec la carte la plus haute gagne", 1, 1) {
+Bataille::Bataille() : Jeu("Bataille", "Un jeu de cartes classique", "Les joueurs tirent une carte chacun et le joueur avec la carte la plus haute gagne", 1, 1), strategieMelange(std::make_unique<MelangeAleatoire>()) {
+    std::vector<Carte> paquet = genererPaquet();
+    distribuerCartes(paquet, mainJoueur, mainApp);
 }
 
 void Bataille::jouer() {
-    std::vector<Carte> paquet = genererPaquet();
-    std::vector<Carte> mainJoueur;
-    std::vector<Carte> mainApp;
+    jouerTour();
+}
 
-    distribuerCartes(paquet, mainJoueur, mainApp);
-
-    while (!mainJoueur.empty() && !mainApp.empty()) {
-        Carte carteJoueur = tirerCarte(mainJoueur);
-        Carte carteApp = tirerCarte(mainApp);
-
-        std::cout << "Le joueur a tiré la carte : " << carteJoueur.toString() << std::endl;
-                std::cout << "L'application a tiré la carte : " << carteApp.toString() << std::endl;
-
-                             comparerCartes(carteJoueur, carteApp, mainJoueur, mainApp);
-    }
-
-    if (mainJoueur.empty()) {
-        std::cout << "L'application a gagné !" << std::endl;
+void Bataille::jouerTour() {
+    if (!mainJoueur.empty() && !mainApp.empty()) {
+        carteJoueur = std::make_shared<Carte>(tirerCarte(mainJoueur));
+        carteApp = std::make_shared<Carte>(tirerCarte(mainApp));
+        comparerCartes(*carteJoueur, *carteApp, mainJoueur, mainApp);
     } else {
-        std::cout << "Le joueur a gagné !" << std::endl;
+        resultatTour = mainJoueur.empty() ? "L'application a gagné !" : "Le joueur a gagné !";
     }
+}
+
+std::shared_ptr<Carte> Bataille::getCarteJoueur() const {
+    return carteJoueur;
+}
+
+std::shared_ptr<Carte> Bataille::getCarteApp() const {
+    return carteApp;
+}
+
+std::string Bataille::getResultatTour() const {
+    return resultatTour;
 }
 
 std::vector<Carte> Bataille::genererPaquet() {
     std::vector<Carte> paquet;
-    for (int couleur = Carte::Coeur; couleur <= Carte::Pique; ++couleur) {
-        for (int valeur = Carte::Deux; valeur <= Carte::As; ++valeur) {
-            paquet.push_back(Carte(static_cast<Carte::Couleur>(couleur), static_cast<Carte::Valeur>(valeur)));
+    for (int i = 2; i <= 14; ++i) {
+        for (int j = 0; j <= 3; ++j) {
+            paquet.push_back(Carte(static_cast<Carte::Valeur>(i), static_cast<Carte::Couleur>(j)));
         }
     }
-    std::shuffle(paquet.begin(), paquet.end(), std::mt19937(std::random_device()()));
+    strategieMelange->melanger(paquet);
     return paquet;
 }
 
@@ -52,21 +57,21 @@ void Bataille::distribuerCartes(std::vector<Carte>& paquet, std::vector<Carte>& 
 }
 
 Carte Bataille::tirerCarte(std::vector<Carte>& main) {
-    Carte carte = main.front();
-    main.erase(main.begin());
+    Carte carte = main.back();
+    main.pop_back();
     return carte;
 }
 
 void Bataille::comparerCartes(Carte carteJoueur, Carte carteApp, std::vector<Carte>& mainJoueur, std::vector<Carte>& mainApp) {
     if (carteJoueur.getValeur() > carteApp.getValeur()) {
-        std::cout << "Le joueur gagne cette manche !" << std::endl;
-        mainJoueur.push_back(carteJoueur);
-        mainJoueur.push_back(carteApp);
+        mainJoueur.insert(mainJoueur.begin(), carteJoueur);
+        mainJoueur.insert(mainJoueur.begin(), carteApp);
+        resultatTour = "Vous avez gagné ce tour.";
     } else if (carteJoueur.getValeur() < carteApp.getValeur()) {
-        std::cout << "L'application gagne cette manche !" << std::endl;
-        mainApp.push_back(carteJoueur);
-        mainApp.push_back(carteApp);
+        mainApp.insert(mainApp.begin(), carteJoueur);
+        mainApp.insert(mainApp.begin(), carteApp);
+        resultatTour = "L'application a gagné ce tour.";
     } else {
-        std::cout << "Égalité !" << std::endl;
+        resultatTour = "Égalité.";
     }
 }
