@@ -1,4 +1,5 @@
 #include "MelangeAleatoire.h"
+#include <algorithm>
 
 void MelangeAleatoire::melanger(std::vector<Carte>& paquet) {
     std::random_device rd;

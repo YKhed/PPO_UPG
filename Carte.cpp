@@ -49,3 +49,69 @@ std::string Carte::toString() const {
 
     return oss.str();
 }
+
+QString Carte::getNomFichierImage() {
+
+
+    QString couleurStr;
+    QString valeurStr;
+
+    switch (getCouleur()) {
+    case Couleur::Coeur:
+        couleurStr = "h";
+        break;
+    case Couleur::Carreau:
+        couleurStr = "d";
+        break;
+    case Couleur::Trefle:
+        couleurStr = "c";
+        break;
+    case Couleur::Pique:
+        couleurStr = "s";
+        break;
+    }
+
+    switch (getValeur()) {
+    case Valeur::Deux:
+        valeurStr = "02";
+        break;
+    case Valeur::Trois:
+        valeurStr = "03";
+        break;
+    case Valeur::Quatre:
+        valeurStr = "04";
+        break;
+    case Valeur::Cinq:
+        valeurStr = "05";
+        break;
+    case Valeur::Six:
+        valeurStr = "06";
+        break;
+    case Valeur::Sept:
+        valeurStr = "07";
+        break;
+    case Valeur::Huit:
+        valeurStr = "08";
+        break;
+    case Valeur::Neuf:
+        valeurStr = "09";
+        break;
+    case Valeur::Dix:
+        valeurStr = "10";
+        break;
+    case Valeur::Valet:
+        valeurStr = "11";
+        break;
+    case Valeur::Dame:
+        valeurStr = "12";
+        break;
+    case Valeur::Roi:
+        valeurStr = "13";
+        break;
+    case Valeur::As:
+        valeurStr = "01";
+        break;
+    }
+
+    return ":/cartes/C:/Users/Admin/Desktop/cartes/" + couleurStr + valeurStr + ".png";
+}

@@ -1,8 +1,10 @@
 #include "SoireePage.h"
 #include "PartiePage.h"
+#include "FormException.h"
 #include "CreatePartieDialog.h"
 #include "JeuFactory.h"
 #include <QVBoxLayout>
+#include <QMessageBox>
 
 SoireePage::SoireePage(std::shared_ptr<Soiree> soiree, QWidget *parent) : QDialog(parent), soiree(soiree) {
     setFixedSize(500, 500);
@@ -23,20 +25,30 @@ void SoireePage::onCreatePartieClicked() {
     int result = createPartieDialog.exec();
     if (result == QDialog::Accepted) {
         QString nomPartie = createPartieDialog.getNomPartie();
-        JeuFactory::TypeJeu typeJeu = static_cast<JeuFactory::TypeJeu>(createPartieDialog.getTypeJeu());
 
-        // Utilisez la JeuFactory pour créer un nouveau jeu
-        std::unique_ptr<Jeu> jeu = JeuFactory::creerJeu(typeJeu);
 
-        // Créez une nouvelle Partie avec le jeu créé
-        auto partie = std::make_shared<Partie>(nomPartie.toStdString(), std::move(jeu));
+        try {
+            if (nomPartie.isEmpty()) {
+                throw FormException("Veuillez remplir les champs du formulaire.");
+            } else {
+                JeuFactory::TypeJeu typeJeu = static_cast<JeuFactory::TypeJeu>(createPartieDialog.getTypeJeu());
 
-        // Ajoutez la nouvelle partie à la soirée
-        soiree->ajouterPartie(partie);
-        qDebug() << partie->getJeu()->getNomJeu();
-        // Ouvrez la nouvelle fenêtre PartiePage
-        PartiePage *partiePage = new PartiePage(partie, this);
-        partiePage->show();
+                // Utilisez la JeuFactory pour créer un nouveau jeu
+                std::unique_ptr<Jeu> jeu = JeuFactory::creerJeu(typeJeu);
+
+                // Créez une nouvelle Partie avec le jeu créé
+                auto partie = std::make_shared<Partie>(nomPartie.toStdString(), std::move(jeu));
+                // Ajoutez la nouvelle partie à la soirée
+                soiree->ajouterPartie(partie);
+                qDebug() << partie->getJeu()->getNomJeu();
+                // Ouvrez la nouvelle fenêtre PartiePage
+                PartiePage *partiePage = new PartiePage(partie, this);
+                partiePage->show();
+            }
+        } catch (const FormException &e) {
+            QMessageBox::warning(this, "Erreur", e.what());
+        }
+
     }
 }
 

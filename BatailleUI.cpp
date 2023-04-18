@@ -42,7 +42,24 @@ void BatailleUI::onJouerTourClicked() {
 }
 
 void BatailleUI::updateUI() {
-    carteJoueurLabel->setText(("Joueur: " + bataille->getCarteJoueur()->toString()).c_str());
-    carteAppLabel->setText(("App: " + bataille->getCarteApp()->toString()).c_str());
+    QString nomFichierCarteJoueur = bataille->getCarteJoueur()->getNomFichierImage();
+    QString nomFichierCarteApp = bataille->getCarteApp()->getNomFichierImage();
+
+    qDebug() << nomFichierCarteJoueur;
+    qDebug() << nomFichierCarteApp;
+
+    QPixmap carteImageJoueur(nomFichierCarteJoueur);
+    QPixmap carteImageApp(nomFichierCarteApp);
+
+    QSize labelSize = carteJoueurLabel->size();
+
+    carteImageJoueur = carteImageJoueur.scaled(labelSize, Qt::KeepAspectRatio);
+    carteImageApp = carteImageApp.scaled(labelSize, Qt::KeepAspectRatio);
+
+    carteJoueurLabel->setPixmap(carteImageJoueur);
+    carteAppLabel->setPixmap(carteImageApp);
+
+    //carteJoueurLabel->setText(("Joueur: " + bataille->getCarteJoueur()->toString()).c_str());
+    //carteAppLabel->setText(("App: " + bataille->getCarteApp()->toString()).c_str());
     resultatLabel->setText(bataille->getResultatTour().c_str());
 }

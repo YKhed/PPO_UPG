@@ -7,7 +7,7 @@
 
 class MelangeAleatoire : public MelangeStrategie {
 public:
-    virtual void melanger(std::vector<Carte>& paquet) override;
+    void melanger(std::vector<Carte>& paquet) override;
 };
 
 #endif // MELANGEALEATOIRE_H

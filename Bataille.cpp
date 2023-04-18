@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <random>
 
-Bataille::Bataille() : Jeu("Bataille", "Un jeu de cartes classique", "Les joueurs tirent une carte chacun et le joueur avec la carte la plus haute gagne", 1, 1), strategieMelange(std::make_unique<MelangeAleatoire>()) {
+Bataille::Bataille() : Jeu("Bataille", "Un jeu de cartes classique", "Les joueurs tirent une carte chacun et le joueur avec la carte la plus haute gagne", 1, 1),
+    strategieMelange(std::make_unique<MelangeAleatoire>()) {
     std::vector<Carte> paquet = genererPaquet();
     distribuerCartes(paquet, mainJoueur, mainApp);
 }

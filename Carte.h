@@ -3,6 +3,7 @@
 #define CARTE_H
 
 #include <string>
+#include <QString>
 
 class Carte {
 public:
@@ -14,6 +15,7 @@ public:
     Couleur getCouleur() const;
     Valeur getValeur() const;
     std::string toString() const;
+    QString getNomFichierImage();
 
 private:
     Couleur couleur;

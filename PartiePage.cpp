@@ -19,25 +19,9 @@ PartiePage::PartiePage(std::shared_ptr<Partie> partie, QWidget *parent)
 }
 
 void PartiePage::onLaunchGameClicked() {
-    // Lance le jeu en appelant la méthode "jouer" de la classe Jeu
-    /* if (auto bataille = dynamic_cast<Bataille*>(partie->getJeu())) {
-        // Créez une instance de BatailleConsoleUI et enregistrez-la en tant qu'observateur
-        auto batailleConsoleUI = std::make_shared<BatailleConsoleUI>();
-        bataille->ajouterObserver(batailleConsoleUI.get());
-
-        // Lancez le jeu en appelant la méthode "jouer" de la classe Jeu
-        partie->getJeu()->jouer();
-
-        // Supprimez l'observateur après la fin du jeu
-        bataille->supprimerObserver(batailleConsoleUI.get());
-    } else {
-        // Lancez le jeu en appelant la méthode "jouer" de la classe Jeu
-        partie->getJeu()->jouer();
-    }*/
     qDebug() << "Partie commencée";
 
     BatailleUI *batailleUI = new BatailleUI(partie, this);
-    //batailleUI->setAttribute(Qt::WA_DeleteOnClose);
     batailleUI->show();
 }
 
